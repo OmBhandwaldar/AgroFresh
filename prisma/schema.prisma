@@ -20,4 +20,51 @@ model Category {
   name  String
   /// URL slug, unique across all categories
   slug  String @unique
+
+  /// One-to-many → types
+  types Type[]
+}
+
+model Type {
+  /// UUID primary key
+  id           String    @id @default(uuid())
+  /// e.g. “Leafy Vegetables”, “Root Vegetables”, “Citrus Fruits”
+  name         String
+  /// URL slug (kebab-case), unique _per_ category
+  slug         String
+  /// Foreign key → Category
+  category     Category  @relation(fields: [categoryId], references: [id])
+  categoryId   String
+
+  /// One-to-many → products
+  products     Product[]
+
+  /// enforce unique slug within a category
+  @@unique([slug, categoryId])
+}
+
+model Product {
+  /// UUID primary key
+  id          String   @id @default(uuid())
+  /// e.g. “Carrot”, “Kale”
+  name        String
+  /// URL slug, unique _per_ type
+  slug        String
+  /// FK → Type
+  type        Type     @relation(fields: [typeId], references: [id])
+  typeId      String
+
+  /// Bulk price per unit (e.g. per kg)
+  price       Float
+  /// Optional detailed description
+  description String?
+  /// Path or URL to image
+  imageUrl    String?
+
+  /// timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  /// enforce unique slug within a type
+  @@unique([slug, typeId])
 }
