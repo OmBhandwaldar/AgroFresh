@@ -34,24 +34,32 @@ interface CategoryItemProps {
     );
   };
   
-  const CategoryGrid = () => {
-    const categories = [
-      { icon: "/placeholder.svg", name: "Root Vegetables", slug: "root-vegetables", categorySlug: "vegetables" },
-      { icon: "/placeholder.svg", name: "Leafy Vegetables", slug: "leafy-vegetables", categorySlug: "vegetables" },
-      { icon: "/placeholder.svg", name: "Fruiting Vegetables", slug: "fruiting-vegetables", categorySlug: "vegetables" },
-      { icon: "/placeholder.svg", name: "Citrus Fruits", slug: "citrus-fruits", categorySlug: "fruits" },
-      { icon: "/placeholder.svg", name: "Berries", slug: "berries", categorySlug: "fruits" },
-      { icon: "/placeholder.svg", name: "Tropical Fruits", slug: "tropical-fruits", categorySlug: "fruits" },
-      { icon: "/placeholder.svg", name: "Pome Fruits", slug: "pome-fruits", categorySlug: "fruits" },
-      { icon: "/placeholder.svg", name: "Cereals", slug: "cereals", categorySlug: "grains" },
-      { icon: "/placeholder.svg", name: "Pulses", slug: "pulses", categorySlug: "grains" },
-      { icon: "/placeholder.svg", name: "Oil Seeds", slug: "oil-seeds", categorySlug: "grains" },
-    ];
-  
+  interface Type {
+    id: string;
+    name: string;
+    slug: string;
+    categoryId: string;
+    category: {
+      id: string;
+      name: string;
+      slug: string;
+    };
+  }
+
+  interface CategoryGridProps {
+    types: Type[];
+  }
+
+  const CategoryGrid = ({ types }: CategoryGridProps) => {
     return (
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        {categories.map((category) => (
-          <CategoryItem key={category.slug} {...category} />
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        {types.map((type) => (
+          <CategoryItem
+            key={type.id}
+            name={type.name}
+            slug={type.slug}
+            categorySlug={type.category.slug}
+          />
         ))}
       </div>
     );

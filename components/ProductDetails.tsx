@@ -1,7 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Product } from "@/lib/data";
 import Image from "next/image";
+
+interface Product {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  type: string;
+  price: number;
+  imageUrl: string;
+  description: string;
+}
+
 
 const ProductDetails = ({id, slug, name, category, type, price, description, imageUrl} : Product) => {
   return (

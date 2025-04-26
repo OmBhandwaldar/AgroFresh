@@ -1,70 +1,48 @@
 import ProductCard from "./ProductCard";
 
-const ProductGrid = () => {
-  const products = [
-    {
-      title: "Nokia 105 Classic Single Sim with Wireless FM",
-      image: "/placeholder.svg",
-      price: 1199,
-      originalPrice: 1599,
-      discount: 25,
-      deliveryTime: "17 Mins",
-      quantity: "1 pc"
-    },
-    {
-      title: "itel Power 120 | 2 inch Big Display | 1000mAh Battery",
-      image: "/placeholder.svg",
-      price: 1199,
-      originalPrice: 1599,
-      discount: 25,
-      deliveryTime: "17 Mins",
-      quantity: "1 pc"
-    },
-    {
-      title: "itel Ace 3 Shine | 1.8 Inch Display | 1000mAh Battery",
-      image: "/placeholder.svg",
-      price: 899,
-      originalPrice: 1249,
-      discount: 28,
-      deliveryTime: "17 Mins",
-      quantity: "1 pc"
-    },
-    {
-      title: "Lava Hero Shakti 2025 Dual Sim | Military Grade",
-      image: "/placeholder.svg",
-      price: 799,
-      originalPrice: 1199,
-      discount: 35,
-      deliveryTime: "17 Mins",
-      quantity: "1 piece"
-    },
-    {
-      title: "Abra ka dabra | Military Grade",
-      image: "/placeholder.svg",
-      price: 799,
-      originalPrice: 1199,
-      discount: 35,
-      deliveryTime: "17 Mins",
-      quantity: "1 piece"
-    },
-    {
-      title: "Dabra ka abra | Military Grade",
-      image: "/placeholder.svg",
-      price: 799,
-      originalPrice: 1199,
-      discount: 35,
-      deliveryTime: "17 Mins",
-      quantity: "1 piece"
-    }
-  ];
+export interface Product {
+  id: string;
+  name: string;
+  slug: string;
+  price: number;
+  description: string | null;
+  imageUrl: string | null;
+  type: {
+    name: string;
+    category: {
+      name: string;
+    };
+  };
+}
+
+interface ProductGridProps {
+  products: Product[];
+}
+
+// const ProductGrid = () => {
+const ProductGrid = ({ products }: ProductGridProps) => {
+  if (products.length === 0) {
+    return <div className="text-center py-8">No products found</div>;
+  }
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
       {products.map((product) => (
-        <ProductCard key={product.title} {...product} />
+        <ProductCard
+          key={product.id}
+          id={product.id}
+          name={product.name}
+          image={product.imageUrl || "/placeholder.svg"}
+          price={product.price}
+          productSlug={product.slug}
+          originalPrice={product.price * 1.2} // Assuming 20% markup for original price
+          discount={20} // Assuming 20% discount
+          deliveryTime="17 Mins"
+          quantity="1 kg"
+        />
       ))}
     </div>
   );
 };
 
-export default ProductGrid;
+export default ProductGrid

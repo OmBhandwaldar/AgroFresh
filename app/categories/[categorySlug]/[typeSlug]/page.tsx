@@ -1,65 +1,66 @@
 // app/categories/[categorySlug]/[typeSlug]/page.tsx
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  getAllCategories,
-  getTypesForCategory,
-  getProductsByType,
-} from "@/lib/data";
+// import {
+//   getAllCategories,
+//   getTypesForCategory,
+// } from "@/lib/data";
+import { getProductsByCategoryAndType } from "@/lib/actions";
+import ProductGrid from "@/components/ProductGrid";
 
-type Props = {
+interface PageProps {
   params: Promise<{
     categorySlug: string;
     typeSlug: string;
   }>;
-};
-
-// 1. Pre-render every (category, type) pair at build time
-export async function generateStaticParams(): Promise<
-  { categorySlug: string; typeSlug: string }[]
-> {
-  const categories = await getAllCategories();
-  const allParams: { categorySlug: string; typeSlug: string }[] = [];
-
-  for (const cat of categories) {
-    const types = await getTypesForCategory(cat.slug);
-    types.forEach((t) => {
-      allParams.push({
-        categorySlug: cat.slug,
-        typeSlug: t.slug,
-      });
-    });
-  }
-
-  return allParams;
 }
 
-export default async function TypePage({ params }: Props) {
-  // const { categorySlug, typeSlug } = params;
-  const resolvedParams =await params;
+// 1. Pre-render every (category, type) pair at build time
+// export async function generateStaticParams(): Promise<
+//   { categorySlug: string; typeSlug: string }[]
+// > {
+//   const categories = await getAllCategories();
+//   const allParams: { categorySlug: string; typeSlug: string }[] = [];
 
-  // 2. Fetch — you could also validate that the category/type exist
-  const products = await getProductsByType(resolvedParams.categorySlug, resolvedParams.typeSlug);
-  // const products = await getProductsByType(categorySlug, typeSlug);
+//   for (const cat of categories) {
+//     const types = await getTypesForCategory(cat.slug);
+//     types.forEach((t) => {
+//       allParams.push({
+//         categorySlug: cat.slug,
+//         typeSlug: t.slug,
+//       });
+//     });
+//   }
+
+//   return allParams;
+// }
+
+export default async function CategoryTypePage({ params }: PageProps) {
+  const resolvedParams = await params;
+  // const { categorySlug, typeSlug } = params;
+  const products = await getProductsByCategoryAndType(resolvedParams.categorySlug, resolvedParams.typeSlug);
+
   if (!products.length) {
-    // no products or invalid slugs → 404
     notFound();
   }
 
   return (
-    <main>
-      <h1>
-        {resolvedParams.categorySlug.replace("-", " ")} › {resolvedParams.typeSlug.replace("-", " ")}
-      </h1>
-      <ul>
-        {products.map((p) => (
-          <li key={p.id}>
-            <Link href={`/products/${p.slug}/${p.id}`}>
-              {p.name} — ${p.price.toFixed(2)}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </main>
+    // <div className="container mx-auto px-4 py-8">
+    //   <h1 className="text-2xl font-bold mb-6">
+    //     {products[0].type.category.name} - {products[0].type.name}
+    //   </h1>
+    //   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    //     {products.map((product) => (
+    //       <Link key={product.id}href={`/products/${resolvedParams.typeSlug}/${product.id}`}><div className="border rounded-lg p-4 hover:shadow-md transition-shadow">
+    //         <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
+    //         <p className="text-gray-600 mb-2">Price: ${product.price}</p>
+    //         <p className="text-sm text-gray-500">{product.description}</p>
+    //       </div></Link>
+    //     ))}
+    //   </div>
+    // </div>
+    <>
+    <h2 className="text-xl font-semibold mb-6">Featured Products</h2>
+      <ProductGrid products={products}/>
+  </>
   );
 }
