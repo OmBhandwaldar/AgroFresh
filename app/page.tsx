@@ -1,5 +1,4 @@
 // 'use client'
-
 // import { Suspense } from 'react';
 // import CategoryBanner from "@/components/CategoryBanner";
 // import CategoryGrid from "@/components/CategoryGrid";
@@ -7,21 +6,12 @@
 // import { useRouter } from "next/navigation";
 import ProductGridWrapper from '@/components/ProductGridWrapper';
 import CategoryGridWraper from '@/components/CategoryGridWrapper';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/[...nextauth]/route';
 
-export default function Home() {
-  // const router = useRouter();
-
-  // const handleVegetablesClick = () => {
-  //   router.push("/categories/vegetables");
-  // };
-
-  // const handlePetCareClick = () => {
-  //   router.push("/categories/pet-care");
-  // };
-
-  // const handleFruitsClick = () => {
-  //   router.push("/categories/fruits");
-  // };
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+  console.log('Session: ', session);
 
   return (
     <div className="min-h-screen bg-gray-50">

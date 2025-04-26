@@ -9,7 +9,7 @@ const Header = () => {
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-yellow-400">blinkit</h1>
+            <h1 className="text-2xl font-bold text-yellow-400">AgroFresh</h1>
           </div>
 
           {/* Location selector */}

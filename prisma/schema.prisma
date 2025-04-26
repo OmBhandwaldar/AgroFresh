@@ -13,58 +13,107 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Category {
-  /// UUID primary key
-  id    String @id @default(uuid())
-  /// Human-readable name
-  name  String
-  /// URL slug, unique across all categories
-  slug  String @unique
 
-  /// One-to-many → types
+// model Cart {
+//   id        String      @id @default(uuid())
+//   user      User?       @relation(fields: [userId], references: [id])
+//   userId    String?
+//   createdAt DateTime    @default(now())
+//   items     CartItem[]
+// }
+
+// model CartItem {
+//   id         String   @id @default(uuid())
+//   cart       Cart     @relation(fields: [cartId], references: [id])
+//   cartId     String
+//   product    Product  @relation(fields: [productId], references: [id])
+//   productId  String
+//   quantity   Int      @default(1)
+
+//   @@unique([cartId, productId])
+// }
+
+/// OTP storage
+model Otp {
+  id        String   @id @default(uuid())
+  phone     String
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  @@index([phone])
+}
+
+/// NextAuth models (required for PrismaAdapter)
+model User {
+  id            String    @id @default(uuid())
+  phone         String    @unique
+  // carts         Cart[]    
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Account {
+  id                 String  @id @default(uuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? 
+  access_token       String?
+  expires_at         Int?    
+  token_type         String? 
+  scope              String? 
+  id_token           String? 
+  session_state      String? 
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  @@unique([identifier, token])
+}
+
+
+model Category {
+  id    String @id @default(uuid())
+  name  String
+  slug  String @unique
   types Type[]
 }
 
 model Type {
-  /// UUID primary key
   id           String    @id @default(uuid())
-  /// e.g. “Leafy Vegetables”, “Root Vegetables”, “Citrus Fruits”
   name         String
-  /// URL slug (kebab-case), unique _per_ category
   slug         String
-  /// Foreign key → Category
   category     Category  @relation(fields: [categoryId], references: [id])
   categoryId   String
-
-  /// One-to-many → products
   products     Product[]
 
-  /// enforce unique slug within a category
   @@unique([slug, categoryId])
 }
 
 model Product {
-  /// UUID primary key
   id          String   @id @default(uuid())
-  /// e.g. “Carrot”, “Kale”
   name        String
-  /// URL slug, unique _per_ type
   slug        String
-  /// FK → Type
   type        Type     @relation(fields: [typeId], references: [id])
   typeId      String
-
-  /// Bulk price per unit (e.g. per kg)
   price       Float
-  /// Optional detailed description
   description String?
-  /// Path or URL to image
   imageUrl    String?
-
-  /// timestamps
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  /// enforce unique slug within a type
   @@unique([slug, typeId])
 }
