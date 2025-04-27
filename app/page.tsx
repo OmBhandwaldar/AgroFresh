@@ -1,12 +1,8 @@
 // 'use client'
 // import { Suspense } from 'react';
 // import CategoryBanner from "@/components/CategoryBanner";
-// import CategoryGrid from "@/components/CategoryGrid";
-// import ProductGridWrapper from "@/components/ProductGridWrapper";
-// import { useRouter } from "next/navigation";
 import ProductGridWrapper from '@/components/ProductGridWrapper';
 import CategoryGridWraper from '@/components/CategoryGridWrapper';
-// import { getServerSession } from 'next-auth';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from '@/lib/auth';
 
