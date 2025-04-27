@@ -37,7 +37,6 @@ const ProductGrid = ({ products }: ProductGridProps) => {
           productSlug={product.slug}
           originalPrice={product.price * 1.2} // Assuming 20% markup for original price
           discount={20} // Assuming 20% discount
-          deliveryTime="17 Mins"
           quantity="1 kg"
         />
       ))}

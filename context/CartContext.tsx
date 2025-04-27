@@ -10,7 +10,8 @@ type Action =
   | { type: 'SET'; payload: CartItem[] }
   | { type: 'LOADING'; payload: boolean }
   | { type: 'ADD_OR_UPDATE'; payload: CartItem }
-  | { type: 'REMOVE'; payload: string };
+  | { type: 'REMOVE'; payload: string }
+  | { type: 'CLEAR' };
 
 const CartContext = createContext<{
   items: CartItem[];
@@ -18,12 +19,14 @@ const CartContext = createContext<{
   addItem: (productId: string) => Promise<void>;
   updateItem: (itemId: string, qty: number) => Promise<void>;
   removeItem: (itemId: string) => Promise<void>;
+  clearCart: () => void;
 }>({
   items: [],
   loading: false,
   addItem: async () => {},
   updateItem: async () => {},
   removeItem: async () => {},
+  clearCart: () => {},
 });
 
 function reducer(state: State, action: Action): State {
@@ -42,6 +45,8 @@ function reducer(state: State, action: Action): State {
       };
     case 'REMOVE':
       return { ...state, items: state.items.filter(i => i.id !== action.payload) };
+    case 'CLEAR':
+      return { ...state, items: [] };
   }
 }
 
@@ -88,9 +93,21 @@ export const CartProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     dispatch({ type: 'REMOVE', payload: itemId });
   };
 
+  const clearCart = () => {
+    dispatch({ type: 'CLEAR' });
+  };
+
   return (
     <CartContext.Provider
-      value={{ items: state.items, loading: state.loading, addItem, updateItem, removeItem }}
+      value={{ 
+        items: state.items, 
+        loading: state.loading, 
+        addItem, 
+        updateItem, 
+        removeItem, 
+        clearCart 
+        
+      }}
     >
       {children}
     </CartContext.Provider>

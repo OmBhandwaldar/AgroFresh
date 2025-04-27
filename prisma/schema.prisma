@@ -19,6 +19,7 @@ model User {
   name     String 
   password String
   carts    Cart[]
+  orders    Order[]   // added relation back to Order
   accounts Account[]
   sessions Session[]
 }
@@ -108,6 +109,35 @@ model Product {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   cartItems   CartItem[]
+  orderItems  OrderItem[]   // added relation back to Order
 
   @@unique([slug, typeId])
+}
+
+// Order Models
+model Order {
+  id        String      @id @default(uuid())
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  name      String
+  contact   String
+  house     String
+  building  String
+  landmark  String
+  city      String
+  state     String
+  pincode   String
+  status    String      @default("pending")
+  createdAt DateTime    @default(now())
+  items     OrderItem[]
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int
+  price     Float
 }
