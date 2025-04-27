@@ -6,18 +6,25 @@
 // import { useRouter } from "next/navigation";
 import ProductGridWrapper from '@/components/ProductGridWrapper';
 import CategoryGridWraper from '@/components/CategoryGridWrapper';
-import { getServerSession } from 'next-auth';
-import { authOptions } from './api/[...nextauth]/route';
+// import { getServerSession } from 'next-auth';
+import { getServerSession } from "next-auth/next";
+import { authOptions } from '@/lib/auth';
+
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
-  console.log('Session: ', session);
-
   return (
     <div className="min-h-screen bg-gray-50">
-    {/* <Header /> */}
     
     <main className="container mx-auto px-4 py-8">
+    {session ? (
+        <>
+          <p>✅ Welcome, {session.user.name}</p>
+          <p>Phone: {session.user.phone}</p>
+        </>
+      ) : (
+        <p>🚫 Not signed in — <a href="/login">Login</a></p>
+      )}
       {/* Featured Banners */}
       {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <CategoryBanner

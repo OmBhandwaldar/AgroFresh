@@ -13,59 +13,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-// model Cart {
-//   id        String      @id @default(uuid())
-//   user      User?       @relation(fields: [userId], references: [id])
-//   userId    String?
-//   createdAt DateTime    @default(now())
-//   items     CartItem[]
-// }
-
-// model CartItem {
-//   id         String   @id @default(uuid())
-//   cart       Cart     @relation(fields: [cartId], references: [id])
-//   cartId     String
-//   product    Product  @relation(fields: [productId], references: [id])
-//   productId  String
-//   quantity   Int      @default(1)
-
-//   @@unique([cartId, productId])
-// }
-
 /// OTP storage
-model Otp {
-  id        String   @id @default(uuid())
-  phone     String
-  code      String
-  expiresAt DateTime
-  used      Boolean  @default(false)
-  @@index([phone])
-}
+// model Otp {
+//   id        String   @id @default(uuid())
+//   phone     String
+//   code      String
+//   expiresAt DateTime
+//   used      Boolean  @default(false)
+
+//   @@index([phone])
+// }
 
 /// NextAuth models (required for PrismaAdapter)
 model User {
-  id            String    @id @default(uuid())
-  phone         String    @unique
-  // carts         Cart[]    
-  accounts      Account[]
-  sessions      Session[]
+  id       String    @id @default(uuid())
+  phone    String    @unique
+  name     String 
+  password String
+  carts    Cart[]
+  accounts Account[]
+  sessions Session[]
 }
 
 model Account {
-  id                 String  @id @default(uuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String? 
-  access_token       String?
-  expires_at         Int?    
-  token_type         String? 
-  scope              String? 
-  id_token           String? 
-  session_state      String? 
-  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(uuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@unique([provider, providerAccountId])
 }
 
@@ -81,9 +65,30 @@ model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
+
   @@unique([identifier, token])
 }
 
+model Cart {
+  id        String     @id @default(uuid())
+  user      User?      @relation(fields: [userId], references: [id])
+  userId    String?
+  createdAt DateTime   @default(now())
+  items     CartItem[]
+}
+
+model CartItem {
+  id        String  @id @default(uuid())
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  cartId    String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  quantity  Int     @default(1)
+
+  @@unique([cartId, productId])
+}
+
+//------------------------------
 
 model Category {
   id    String @id @default(uuid())
@@ -93,27 +98,28 @@ model Category {
 }
 
 model Type {
-  id           String    @id @default(uuid())
-  name         String
-  slug         String
-  category     Category  @relation(fields: [categoryId], references: [id])
-  categoryId   String
-  products     Product[]
+  id         String    @id @default(uuid())
+  name       String
+  slug       String
+  category   Category  @relation(fields: [categoryId], references: [id])
+  categoryId String
+  products   Product[]
 
   @@unique([slug, categoryId])
 }
 
 model Product {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   name        String
   slug        String
-  type        Type     @relation(fields: [typeId], references: [id])
+  type        Type       @relation(fields: [typeId], references: [id])
   typeId      String
   price       Float
   description String?
   imageUrl    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  cartItems   CartItem[]
 
   @@unique([slug, typeId])
 }

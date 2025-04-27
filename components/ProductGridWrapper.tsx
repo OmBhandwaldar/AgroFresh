@@ -4,7 +4,7 @@ import ProductGrid from './ProductGrid';
 
 export default async function ProductGridWrapper() {
   const products = await getProducts();
-  console.log(products);
+  // console.log(products);
 //   return <ProductGrid products={products} />;
 
     return (
