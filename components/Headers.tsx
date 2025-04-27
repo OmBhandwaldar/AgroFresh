@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, X, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -36,6 +36,23 @@ export default function Headers() {
   const router = useRouter();
   const { data: session } = useSession();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const name  = session?.user?.name;
+    const contact = session?.user?.phone;
+    const adminName    = process.env.NEXT_PUBLIC_ADMIN_NAME;
+    const adminContact = process.env.NEXT_PUBLIC_ADMIN_CONTACT;
+
+    setIsAdmin(
+      name  === adminName &&
+      contact === adminContact
+    );
+  }, [session]);
+
+  if(isAdmin){
+    router.push('/admin');
+  }
 
   const totalPrice = items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
   const deliveryCharge = 50;
@@ -67,6 +84,7 @@ export default function Headers() {
   };
 
   const initial = session?.user?.name?.[0]?.toUpperCase() ?? '';
+  
 
   return (
     <>
@@ -76,14 +94,16 @@ export default function Headers() {
             Agro<span className="text-[#0C831F]">Fresh</span>
           </h1>
 
-          <div className="flex-1 max-w-xl relative mx-4">
-            <Input
-              type="text"
-              placeholder="Search 'paneer'"
-              className="w-full pl-10"
-            />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-          </div>
+          {(!isAdmin) ? (
+             <div className="flex-1 max-w-xl relative mx-4">
+             <Input
+               type="text"
+               placeholder="Search 'paneer'"
+               className="w-full pl-10"
+             />
+             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+           </div>
+            ) : (<></>)}
 
           <div className="hidden md:flex items-center gap-4 relative">
             {!session ? (
@@ -117,8 +137,8 @@ export default function Headers() {
                 )}
               </div>
             )}
-
-            <Button
+            {(!isAdmin) ? (
+              <Button
               variant="secondary"
               className="bg-[#0C831F] text-white"
               onClick={() => {
@@ -129,6 +149,8 @@ export default function Headers() {
             >
               My Cart
             </Button>
+            ) : (<></>)}
+            
           </div>
         </div>
       </header>
