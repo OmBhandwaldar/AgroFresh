@@ -29,12 +29,12 @@ export default function RootLayout({
       <body suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-          <Providers>
-        <Headers />
-        <main className="min-h-screen">
-          {children}
-        </main>
-          </Providers>
+        <Providers>
+          <Headers />
+          <main className="min-h-screen">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );
