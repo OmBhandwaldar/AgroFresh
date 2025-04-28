@@ -3,13 +3,13 @@
 // import CategoryBanner from "@/components/CategoryBanner";
 import ProductGridWrapper from '@/components/ProductGridWrapper';
 import CategoryGridWraper from '@/components/CategoryGridWrapper';
-import { getServerSession } from "next-auth/next";
-import { authOptions } from '@/lib/auth';
+// import { getServerSession } from "next-auth/next";
+// import { authOptions } from '@/lib/auth';
 import HeroSection from '@/components/HeroSection';
 
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
+  // 
   return (
     <div className="min-h-screen bg-gray-50">
     {/* {session ? <div>{session.user.name}</div> : <div>not logged in</div>} */}
