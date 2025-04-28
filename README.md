@@ -7,10 +7,10 @@ AgroFresh is a web application designed to streamline bulk ordering of fresh pro
 ## 🛠 Tech Stack
 
 - **Front-end & Back-end:** Next.js  
-- **Styling:** Tailwind CSS, [shadcn/ui](https://ui.shadcn.com)  
+- **Styling:** Tailwind CSS, shadcn/ui  
 - **ORM:** Prisma  
-- **Database:** PostgreSQL (hosted on [Neon.tech](https://neon.tech))  
-- **Hosting:** [Vercel](https://vercel.com)
+- **Database:** PostgreSQL (hosted on Neon.tech)  
+- **Hosting:** Vercel
 
 ---
 
@@ -64,9 +64,12 @@ AgroFresh is a web application designed to streamline bulk ordering of fresh pro
 4. **Migrate database**
    ```bash
    npx prisma migrate dev --name init
-5. **Generate prisma client**
+5. **Seed database**
+   ```bash
+   npx prisma db seed
+6. **Generate prisma client**
    ```bash
    npx prisma generate
-6. **Run the project**
+7. **Run the project**
    ```bash
    npm run dev
