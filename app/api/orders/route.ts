@@ -23,8 +23,8 @@ export async function POST(req: NextRequest) {
   const order = await prisma.order.create({
     data: {
       userId: session.user.id,
-      name: session.user.name,
-      contact: session.user.phone,
+      name: session.user.name ?? '',
+      contact: session.user.phone ?? '',
       house,
       building,
       landmark,
@@ -32,10 +32,10 @@ export async function POST(req: NextRequest) {
       state,
       pincode,
       items: {
-        create: cart.items.map(i => ({
-          productId: i.productId,
-          quantity: i.quantity,
-          price: i.product.price,
+        create: cart.items.map((item) => ({
+          productId: item.productId,
+          quantity: item.quantity,
+          price: item.product.price,
         })),
       },
     },
