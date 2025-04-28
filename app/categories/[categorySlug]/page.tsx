@@ -1,3 +1,9 @@
+
+
+export default async function CategoryPage() {
+  
+return (<div>its a category page</div>);
+}
 // // // app/categories/[categorySlug]/page.tsx
 // // import { getAllCategories, getTypesForCategory } from "@/lib/data";
 // // import { CategoryItem } from "@/components/CategoryGrid";
