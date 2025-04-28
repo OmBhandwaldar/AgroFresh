@@ -1,3 +1,3 @@
 # AgroFresh
 
-Buying hub of vegetables and fruits.
+Buying hub of fresh vegetables and fruits.
