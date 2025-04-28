@@ -22,7 +22,7 @@ export default function LoginPage() {
     if (res?.error) {
       alert("Invalid phone or password");
     } else {
-      router.push(res?.url || "/");
+      router.push("/");
     }
   }
 

@@ -5,7 +5,7 @@ interface CategoryBannerProps {
   subtitle: string;
   color: string;
   buttonText: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const CategoryBanner = ({ title, subtitle, color, buttonText, onClick }: CategoryBannerProps) => {
@@ -17,7 +17,9 @@ const CategoryBanner = ({ title, subtitle, color, buttonText, onClick }: Categor
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
-          onClick();
+          if (onClick) { 
+            onClick();
+          }
         }
       }}
     >

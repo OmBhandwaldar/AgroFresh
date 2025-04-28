@@ -1,12 +1,12 @@
-// // app/categories/[categorySlug]/page.tsx
-// import { getAllCategories, getTypesForCategory } from "@/lib/data";
-// import { CategoryItem } from "@/components/CategoryGrid";
+// // // app/categories/[categorySlug]/page.tsx
+// // import { getAllCategories, getTypesForCategory } from "@/lib/data";
+// // import { CategoryItem } from "@/components/CategoryGrid";
 
-// type Props = {
-//   params: Promise<{ categorySlug: string }>;
-// };
+// // type Props = {
+// //   params: Promise<{ categorySlug: string }>;
+// // };
 
-export default async function CategoryPage() {
+// export default async function CategoryPage() {
 //   const resolvedParams = await params;
 //   const types = await getTypesForCategory(resolvedParams.categorySlug);
   
@@ -32,13 +32,5 @@ export default async function CategoryPage() {
 //     <CategoryItem key={type.name} {...type} />
 //   ))}
 // </div></main>);
-return (<div>its a category page</div>);
-}
-
-// // ✅ Add this to avoid "params must be awaited" error
-// export async function generateStaticParams() {
-//     const categories = await getAllCategories();
-//     return categories.map((c) => ({
-//       categorySlug: c.slug,
-//     }));
-//   }
+// return (<div>its a category page</div>);
+// }
