@@ -5,6 +5,40 @@ import { format } from "date-fns";
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
 
+type OrderWithItemsAndProducts = {
+  id: string;
+  userId: string;
+  name: string;
+  contact: string;
+  house: string;
+  building: string;
+  landmark: string;
+  city: string;
+  state: string;
+  pincode: string;
+  status: "pending" | "in progress" | "delivered" | string;
+  createdAt: Date;
+  items: {
+    id: string;
+    orderId: string;
+    productId: string;
+    quantity: number;
+    price: number;
+    product: {
+      id: string;
+      name: string;
+      slug: string;
+      typeId: string;
+      price: number;
+      description?: string | null;
+      imageUrl?: string | null;
+      createdAt: Date;
+      updatedAt: Date;
+    };
+  }[];
+};
+
+
 export default async function OrdersPage() {
   // 1) Ensure user is signed in
   const session = await getServerSession(authOptions);
@@ -30,7 +64,7 @@ export default async function OrdersPage() {
       {orders.length === 0 ? (
         <p className="text-gray-600">You haven’t placed any orders yet.</p>
       ) : (
-        orders.map((order) => {
+        orders.map((order:OrderWithItemsAndProducts) => {
           const createdAt = format(order.createdAt, "PPP p");
           const itemsTotal = order.items.reduce(
             (sum, it) => sum + it.price * it.quantity,
