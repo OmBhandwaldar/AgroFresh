@@ -20,6 +20,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Cart is empty' }, { status: 400 });
   }
 
+   // 💡 Define the correct type for cart.items
+   type CartItemWithProduct = typeof cart.items[number];
+
   const order = await prisma.order.create({
     data: {
       userId: session.user.id,
@@ -32,7 +35,7 @@ export async function POST(req: NextRequest) {
       state,
       pincode,
       items: {
-        create: cart.items.map((item) => ({
+        create: cart.items.map((item:CartItemWithProduct) => ({
           productId: item.productId,
           quantity: item.quantity,
           price: item.product.price,
