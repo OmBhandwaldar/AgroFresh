@@ -1,4 +1,3 @@
-// app/orders/page.tsx
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import { format } from "date-fns";
@@ -40,13 +39,10 @@ type OrderWithItemsAndProducts = {
 
 
 export default async function OrdersPage() {
-  // 1) Ensure user is signed in
   const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/login");
   }
-
-  // 2) Fetch this user’s orders with items and products
   const orders = await prisma.order.findMany({
     where: { userId: session.user.id },
     orderBy: { createdAt: "desc" },
@@ -70,7 +66,6 @@ export default async function OrdersPage() {
             (sum, it) => sum + it.price * it.quantity,
             0
           );
-          // Pick a color based on status
           const statusStyles = {
             pending:   "bg-yellow-200 text-yellow-800",
             shipped:   "bg-blue-200 text-blue-800",
@@ -84,7 +79,6 @@ export default async function OrdersPage() {
               key={order.id}
               className="border rounded-lg shadow-sm overflow-hidden"
             >
-              {/* Header with order number, date, status */}
               <div className="bg-gray-100 px-4 py-2 flex justify-between items-center">
                 <div>
                   <span className="font-medium">Order #{order.id}</span>
@@ -95,9 +89,7 @@ export default async function OrdersPage() {
                 </span>
               </div>
 
-              {/* Order details */}
               <div className="p-4 space-y-4">
-                {/* Shipping info */}
                 <div className="text-sm space-y-1">
                   <p>
                     <span className="font-semibold">Address:</span>{" "}
@@ -105,8 +97,6 @@ export default async function OrdersPage() {
                     {order.pincode}
                   </p>
                 </div>
-
-                {/* Items list */}
                 <div className="space-y-3 border-t">
                     <div className="text-lg font-semibold">Products</div>
                   {order.items.map((it) => (
@@ -126,8 +116,6 @@ export default async function OrdersPage() {
                     </div>
                   ))}
                 </div>
-
-                {/* Total */}
                 <div className="border-t pt-3 flex justify-between font-semibold">
                   <span>Total</span>
                   <span>₹{itemsTotal}</span>

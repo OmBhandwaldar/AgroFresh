@@ -19,8 +19,6 @@ export async function POST(req: NextRequest) {
   if (!cart || cart.items.length === 0) {
     return NextResponse.json({ error: 'Cart is empty' }, { status: 400 });
   }
-
-   // 💡 Define the correct type for cart.items
    type CartItemWithProduct = typeof cart.items[number];
 
   const order = await prisma.order.create({

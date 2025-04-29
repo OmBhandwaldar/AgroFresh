@@ -1,4 +1,3 @@
-// app/products/[productSlug]/[productId]/page.tsx
 import { notFound } from "next/navigation";
 import ProductDetails from "@/components/ProductDetails";
 import { getProductById } from "@/lib/actions";
@@ -12,7 +11,6 @@ type Props = {
 
 
 export default async function ProductPage({ params }: Props) {
-  // const { productSlug, productId } = params;
   const resolvedParams = await params;
   const product = await getProductById(resolvedParams.productId);
 

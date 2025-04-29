@@ -30,9 +30,7 @@ const ProductDetails = ({id, slug, name, category, type, price, description, ima
 
       {/* Scrollable Right Panel */}
       <div className="w-1/2 min-h-screen overflow-y-auto p-8">
-        {/* Breadcrumb */}
         <div className="text-sm text-muted-foreground mb-6">
-          {/* Home / Curd & Yogurt / Amul Masti Pouch Curd */}
           {description}
           {category}{type}
           {id}
@@ -44,8 +42,7 @@ const ProductDetails = ({id, slug, name, category, type, price, description, ima
 
         {/* Cooking Time */}
         <div className="flex items-center gap-2 mb-6">
-          <span className="text-muted-foreground">8 MINS</span>
-          <a href="#" className="text-green-600 hover:underline">View all by Amul</a>
+          <a href="#" className="text-green-600 hover:underline">View all by vegetables</a>
         </div>
 
         {/* Price Section */}
@@ -62,7 +59,7 @@ const ProductDetails = ({id, slug, name, category, type, price, description, ima
 
         {/* Why Shop Section */}
         <Card className="p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-6">Why shop from blinkit?</h2>
+          <h2 className="text-xl font-semibold mb-6">Why shop from agrofresh?</h2>
           
           <div className="space-y-6">
             <div className="flex gap-4">

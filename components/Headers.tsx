@@ -866,12 +866,10 @@ export default function Headers() {
     removeItem,
     clearCart,
   } = useCart();
-  // From here on, `session` is non-null
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutMode, setCheckoutMode] = useState(false);
   const [orderResult, setOrderResult] = useState<OrderResult | null>(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  // Address state
   const [address, setAddress] = useState({
     house: "",
     building: "",
@@ -895,9 +893,8 @@ export default function Headers() {
   }, [status, session, router]);
 
   //------------------------------------------------------------------------------------------------------------------------
-  const items = rawItems ?? []; // always an array
+  const items = rawItems ?? []; 
   const loading = cartLoading;
-   // Safe calculations
    const totalPrice = items.reduce(
     (sum, i) => sum + i.product.price * i.quantity,
     0
@@ -907,12 +904,10 @@ export default function Headers() {
   const initial = session?.user?.name[0]?.toUpperCase() ?? "";
 
   //-----------------------------------------------------------------------------------------------------------------
-  // 1) Show spinner while NextAuth is loading
   if (status === "loading") {
     return <div>Loading session…</div>;
   }
 
-  // 2) Show a simple header with Login if unauthenticated
   if (status === "unauthenticated") {
     return (
       <header className="border-b">
@@ -928,24 +923,10 @@ export default function Headers() {
     );
   }
 
-  // 3) Now that status === "authenticated", also guard against session === null
   if (!session) {
     // Should never happen, but satisfies TypeScript
     return null;
   }
-
-
-
-  // // Redirect admin
-  // useEffect(() => {
-  //   const name = session.user.name;
-  //   const contact = (session.user as any).phone; // adjust type if you’ve extended `Session`
-  //   const adminName = process.env.NEXT_PUBLIC_ADMIN_NAME;
-  //   const adminContact = process.env.NEXT_PUBLIC_ADMIN_CONTACT;
-  //   if (name === adminName && contact === adminContact) {
-  //     router.push("/admin");
-  //   }
-  // }, [session, router]);
 
   if (loading) {
     return <div>Loading cart…</div>;
@@ -1034,7 +1015,6 @@ export default function Headers() {
           cartOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* ... the rest of your cart/checkout/order-confirmation UI ... */}
         <div className="p-4 flex items-center justify-between border-b">
           <h2 className="text-lg font-semibold">
             {orderResult

@@ -19,7 +19,6 @@ interface ProductGridProps {
   products: Product[];
 }
 
-// const ProductGrid = () => {
 const ProductGrid = ({ products }: ProductGridProps) => {
   if (products.length === 0) {
     return <div className="text-center py-8">No products found</div>;
@@ -35,8 +34,8 @@ const ProductGrid = ({ products }: ProductGridProps) => {
           image={product.imageUrl || "/placeholder.svg"}
           price={product.price}
           productSlug={product.slug}
-          originalPrice={product.price * 1.2} // Assuming 20% markup for original price
-          discount={20} // Assuming 20% discount
+          originalPrice={product.price * 1.2} 
+          discount={20} 
           quantity="1 kg"
         />
       ))}
