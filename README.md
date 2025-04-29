@@ -17,6 +17,9 @@ AgroFresh is a web application designed to streamline bulk ordering of fresh pro
 ## ✨ Features
 
 ### 🛒 For Buyers
+- **Authentication**
+  - Users can sign up/sign in into their account and securely checkout.
+
 - **Browse Products**
   - View a catalog of vegetables/fruits with name and price.
 
