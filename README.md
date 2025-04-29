@@ -73,3 +73,7 @@ AgroFresh is a web application designed to streamline bulk ordering of fresh pro
 7. **Run the project**
    ```bash
    npm run dev
+
+**ADMIN CREDENTIALS**
+Name: Om
+Contact Number: 9665406874
