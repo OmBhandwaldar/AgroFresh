@@ -12,7 +12,6 @@ type Props = {
 
 
 export default async function ProductPage({ params }: Props) {
-  // const { productSlug, productId } = params;
   const resolvedParams = await params;
   const product = await getProductById(resolvedParams.productId);
 

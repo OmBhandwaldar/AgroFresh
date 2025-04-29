@@ -1,4 +1,3 @@
-// app/orders/page.tsx
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 import { format } from "date-fns";
@@ -6,13 +5,10 @@ import prisma from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
 
 export default async function OrdersPage() {
-  // 1) Ensure user is signed in
   const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/login");
   }
-
-  // 2) Fetch this user’s orders with items and products
   const orders = await prisma.order.findMany({
     where: { userId: session.user.id },
     orderBy: { createdAt: "desc" },

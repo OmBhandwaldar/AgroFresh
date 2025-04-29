@@ -11,7 +11,6 @@ interface cartProps {
     }>; 
 }   
 export async function PUT(req: NextRequest, { params }: cartProps) {
-// export async function PUT(req: NextRequest, { params }: { params: { itemId: string } }) {
   const { quantity } = await req.json();
   const resolvedParams = await params;
   const session = await getServerSession(authOptions);
@@ -21,7 +20,6 @@ export async function PUT(req: NextRequest, { params }: cartProps) {
 
   if (quantity <= 0) {
     await prisma.cartItem.delete({ where: { id: resolvedParams.itemId } });
-    // await prisma.cartItem.delete({ where: { id: params.itemId } });
     return NextResponse.json({ success: true });
   }
 
@@ -35,7 +33,6 @@ export async function PUT(req: NextRequest, { params }: cartProps) {
 }   
 
 
-// export async function DELETE(_req: NextRequest, { params }: { params: { itemId: string } }) {
 export async function DELETE(_req: NextRequest, { params }: cartProps) {
   const session = await getServerSession(authOptions);
   const resolvedParams = await params;
@@ -44,6 +41,5 @@ export async function DELETE(_req: NextRequest, { params }: cartProps) {
   }
 
   await prisma.cartItem.delete({ where: { id: resolvedParams.itemId } });
-//   await prisma.cartItem.delete({ where: { id: params.itemId } });
   return NextResponse.json({ success: true });
 }
