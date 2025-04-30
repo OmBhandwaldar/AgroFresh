@@ -1,4 +1,3 @@
-Look this project in 'realbranch' named branch
 # 🌾 AgroFresh
 
 AgroFresh is a web application designed to streamline bulk ordering of fresh produce. It serves both buyers and administrators with features for order placement, management, and catalog control.
@@ -8,10 +7,12 @@ AgroFresh is a web application designed to streamline bulk ordering of fresh pro
 ## 🛠 Tech Stack
 
 - **Front-end & Back-end:** Next.js  
-- **Styling:** Tailwind CSS, shadcn/ui  
-- **ORM:** Prisma  
+- **Authentication** NextAuth  
+- **ORM:** Prisma
+- **Static assets(images):** AWS S3 + CloudFront
 - **Database:** PostgreSQL (hosted on Neon.tech)  
 - **Hosting:** Vercel
+- **Styling:** Tailwind CSS, shadcn/ui  
 
 ---
 
@@ -20,7 +21,7 @@ AgroFresh is a web application designed to streamline bulk ordering of fresh pro
 ### 🛒 For Buyers
 - **Authentication**
   - Users can sign up/sign in into their account and securely checkout.
-  
+
 - **Browse Products**
   - View a catalog of vegetables/fruits with name and price.
 
@@ -82,3 +83,9 @@ AgroFresh is a web application designed to streamline bulk ordering of fresh pro
 **ADMIN CREDENTIALS**
 Name: Om
 Contact Number: 9665406874
+
+##  Future enhancements
+- **Hositng:** AWS EC2  
+- **Custom Domain:** AWS Route 53  
+- **Horizontal Scaling:** AWS ASG
+- **Styling:** Adding Framer  
