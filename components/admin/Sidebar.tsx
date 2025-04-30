@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 const menuItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
   { icon: User, label: 'Profile', path: '/admin/profile' },
-  { icon: SettingsIcon, label: 'Settings', path: '/admin/settings' },
+  { icon: SettingsIcon, label: 'Inventory Management', path: '/admin/inventory-management' },
 ];
 
 export default function AdminSidebar() {
