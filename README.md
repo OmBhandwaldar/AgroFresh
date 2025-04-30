@@ -7,6 +7,7 @@ AgroFresh is a web application designed to streamline bulk ordering of fresh pro
 ## 🛠 Tech Stack
 
 - **Front-end & Back-end:** Next.js  
+- **Authentication** NextAuth  
 - **Styling:** Tailwind CSS, shadcn/ui  
 - **ORM:** Prisma  
 - **Database:** PostgreSQL (hosted on Neon.tech)  
